@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transaction Status</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
+
+        /* Basic Reset and Setup */
+        body {
+            margin: 0;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fdecea; /* Default: failed transaction background */
+            transition: background-color 0.5s ease;
+        }
+        .container {
+            max-width: 400px;
+            padding: 30px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            text-align: center;
+            background-color: #fff0f0; /* Default: failed transaction container */
+            width: 90%;
+        }
+        .icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+            color: #c0392b; /* Default: failed color */
+            transition: color 0.5s ease;
+        }
+        h1 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        p {
+            font-size: 17px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        button {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        /* Success theme styles */
+        body.success-theme {
+            background-color: #e8f7e9;
+        }
+        body.success-theme .container {
+            background-color: #f0fff4;
+        }
+        body.success-theme .icon {
+            color: #27ae60;
+        }
+        body.success-theme button {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        body.success-theme button:hover {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 15px;
+            }
+            button {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon" id="icon">❌</div> <!-- Default: failed icon -->
+        <h1 id="title">تراکنش ناموفق</h1> <!-- Default: failed title -->
+        <p id="message">لطفا به ربات برگردید و دوباره امتحان کنید.</p> <!-- Default: failed message -->
+        <button id="button">بازگشت به ربات</button> <!-- Default: failed button -->
+    </div>
+
+    <script>
+        /**
+         * Function to get URL query parameter by name
+         * @param {string} param - The parameter name
+         * @returns {string|null} - Parameter value or null if not found
+         */
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the 'Status' parameter from URL
+        const status = getQueryParam('Status');
+
+        // Select elements
+        const body = document.body;
+        const icon = document.getElementById('icon');
+        const title = document.getElementById('title');
+        const message = document.getElementById('message');
+        const button = document.getElementById('button');
+
+        // Default to failure theme and content
+        let isSuccess = false;
+
+        // Check status, only if exactly 'OK' (case-insensitive) treat as success
+        if (status && status.toUpperCase() === 'OK') {
+            isSuccess = true;
+        }
+
+        if (isSuccess) {
+            // Success theme
+            body.classList.add('success-theme');
+            icon.textContent = '✔️';
+            title.textContent = 'تراکنش موفق';
+            message.textContent = 'لطفا صفحه را ببندید و به ربات برگردید و روی دکمه پرداخت کردم بزنید.';
+            button.textContent = 'پرداخت کردم';
+            button.onclick = () => {
+                // Redirect to telegram bot - change this link to your bot username
+                window.location.href = 'https://t.me/demooftestbot_bot';
+            };
+        } else {
+            // Failure theme (default)
+            icon.textContent = '❌';
+            title.textContent = 'تراکنش ناموفق';
+            message.textContent = 'لطفا به ربات برگردید و دوباره امتحان کنید.';
+            button.textContent = 'بازگشت به ربات';
+            button.onclick = () => {
+                // Redirect to telegram bot - change this link to your bot username
+                window.location.href = 'https://t.me/demooftestbot_bot';
+            };
+        }
+    </script>
+
+</body>
+</html>
