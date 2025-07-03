@@ -7,7 +7,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
 
-        /* Basic Reset and Setup */
         body {
             margin: 0;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
@@ -15,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fdecea; /* Default: failed transaction background */
+            background-color: #fdecea;
             transition: background-color 0.5s ease;
         }
         .container {
@@ -24,13 +23,13 @@
             border-radius: 15px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             text-align: center;
-            background-color: #fff0f0; /* Default: failed transaction container */
+            background-color: #fff0f0;
             width: 90%;
         }
         .icon {
             font-size: 70px;
             margin-bottom: 20px;
-            color: #c0392b; /* Default: failed color */
+            color: #c0392b;
             transition: color 0.5s ease;
         }
         h1 {
@@ -74,14 +73,13 @@
             color: #27ae60;
         }
         body.success-theme button {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%) !important;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4) !important;
         }
         body.success-theme button:hover {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 480px) {
             .container {
                 max-width: 300px;
@@ -110,32 +108,25 @@
 <body>
 
     <div class="container">
-        <div class="icon" id="icon">❌</div> <!-- Default: failed icon -->
-        <h1 id="title">تراکنش ناموفق</h1> <!-- Default: failed title -->
-        <p id="message">لطفا به ربات برگردید و دوباره امتحان کنید.</p> <!-- Default: failed message -->
-        <button id="button">بازگشت به ربات</button> <!-- Fixed button text -->
+        <div class="icon" id="icon">❌</div>
+        <h1 id="title">تراکنش ناموفق</h1>
+        <p id="message">لطفا به ربات برگردید و دوباره امتحان کنید.</p>
+        <button id="button">بازگشت به ربات</button>
     </div>
 
     <script>
-        /**
-         * Get URL query parameter by name
-         * @param {string} param - The parameter name
-         * @returns {string|null} - Parameter value or null if not found
-         */
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
         const status = getQueryParam('Status');
-
         const body = document.body;
         const icon = document.getElementById('icon');
         const title = document.getElementById('title');
         const message = document.getElementById('message');
         const button = document.getElementById('button');
 
-        // Default to failure theme and content
         let isSuccess = false;
 
         if (status && status.toUpperCase() === 'OK') {
@@ -143,21 +134,18 @@
         }
 
         if (isSuccess) {
-            // Success theme
             body.classList.add('success-theme');
             icon.textContent = '✔️';
             title.textContent = 'تراکنش موفق';
             message.textContent = 'لطفا صفحه را ببندید و به ربات برگردید و روی دکمه پرداخت کردم بزنید.';
         } else {
-            // Failure theme (default)
             icon.textContent = '❌';
             title.textContent = 'تراکنش ناموفق';
             message.textContent = 'لطفا به ربات برگردید و دوباره امتحان کنید.';
         }
 
-        // Button action: always redirect to the bot
         button.onclick = () => {
-            window.location.href = 'https://t.me/YourBotUsername'; // Change to your bot username
+            window.location.href = 'https://t.me/YourBotUsername'; // جایگزین کن لینک ربات رو
         };
     </script>
 
