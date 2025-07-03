@@ -19,8 +19,8 @@
             transition: background-color 0.5s ease;
         }
         .container {
-            max-width: 400px;
-            padding: 30px 25px;
+            max-width: 350px;
+            padding: 25px 20px;
             border-radius: 15px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             text-align: center;
@@ -28,32 +28,36 @@
             width: 90%;
         }
         .icon {
-            font-size: 80px;
-            margin-bottom: 25px;
+            font-size: 70px;
+            margin-bottom: 20px;
             color: #c0392b; /* Default: failed color */
             transition: color 0.5s ease;
         }
         h1 {
-            margin-bottom: 15px;
-            font-size: 28px;
+            margin-bottom: 12px;
+            font-size: 24px;
         }
         p {
-            font-size: 17px;
+            font-size: 15px;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
         button {
             padding: 12px 35px;
             border: none;
             border-radius: 50px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
             color: white;
             box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
             transition: background 0.3s ease;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            display: block;
         }
         button:hover {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
@@ -70,27 +74,36 @@
             color: #27ae60;
         }
         body.success-theme button {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            /* keep button red as requested */
+            box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
         }
         body.success-theme button:hover {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
         /* Responsive adjustments */
         @media (max-width: 480px) {
             .container {
-                padding: 25px 20px;
+                max-width: 300px;
+                padding: 20px 15px;
+            }
+            .icon {
+                font-size: 60px;
+                margin-bottom: 18px;
             }
             h1 {
-                font-size: 24px;
+                font-size: 20px;
+                margin-bottom: 10px;
             }
             p {
-                font-size: 15px;
+                font-size: 14px;
+                margin-bottom: 20px;
             }
             button {
-                width: 100%;
-                font-size: 16px;
+                font-size: 15px;
+                max-width: 100%;
+                padding: 12px 0;
             }
         }
     </style>
@@ -101,12 +114,12 @@
         <div class="icon" id="icon">❌</div> <!-- Default: failed icon -->
         <h1 id="title">تراکنش ناموفق</h1> <!-- Default: failed title -->
         <p id="message">لطفا به ربات برگردید و دوباره امتحان کنید.</p> <!-- Default: failed message -->
-        <button id="button">بازگشت به ربات</button> <!-- Default: failed button -->
+        <button id="button">بازگشت به ربات</button> <!-- Fixed button text -->
     </div>
 
     <script>
         /**
-         * Function to get URL query parameter by name
+         * Get URL query parameter by name
          * @param {string} param - The parameter name
          * @returns {string|null} - Parameter value or null if not found
          */
@@ -115,10 +128,8 @@
             return urlParams.get(param);
         }
 
-        // Get the 'Status' parameter from URL
         const status = getQueryParam('Status');
 
-        // Select elements
         const body = document.body;
         const icon = document.getElementById('icon');
         const title = document.getElementById('title');
@@ -128,7 +139,6 @@
         // Default to failure theme and content
         let isSuccess = false;
 
-        // Check status, only if exactly 'OK' (case-insensitive) treat as success
         if (status && status.toUpperCase() === 'OK') {
             isSuccess = true;
         }
@@ -139,20 +149,17 @@
             icon.textContent = '✔️';
             title.textContent = 'تراکنش موفق';
             message.textContent = 'لطفا صفحه را ببندید و به ربات برگردید و روی دکمه پرداخت کردم بزنید.';
-            button.onclick = () => {
-                // Redirect to telegram bot - change this link to your bot username
-                window.location.href = 'https://t.me/demooftestbot_bot';
-            };
         } else {
             // Failure theme (default)
             icon.textContent = '❌';
             title.textContent = 'تراکنش ناموفق';
             message.textContent = 'لطفا به ربات برگردید و دوباره امتحان کنید.';
-            button.onclick = () => {
-                // Redirect to telegram bot - change this link to your bot username
-                window.location.href = 'https://t.me/demooftestbot_bot';
-            };
         }
+
+        // Button action: always redirect to the bot
+        button.onclick = () => {
+            window.location.href = 'https://t.me/YourBotUsername'; // Change to your bot username
+        };
     </script>
 
 </body>
